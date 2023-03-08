@@ -27,19 +27,24 @@ def game():
 
     turn = 'X'
     count = 0
+    gameWon = False
 
 
-    for i in range(10):
+    while gameWon == False:
         printBoard(board)
         print("It's your turn, " + turn + ". Where would you like to place your symbol?")
 
-        move = input()        
+        move = input("Cell number: ")
+
+        if move not in int(range(1, 9)):
+            print("Sorry, you must enter a valid cell number (a number between 1 to 9)")
+            move = input("Cell number: ")
 
         if board[move] == ' ':
             board[move] = turn
             count += 1
         else:
-            print("That place is already filled.\nMove to which place?")
+            print("Sorry, that place is already filled.")
             continue
 
         # Now we will check if player X or O has won,for every move after 5 moves. 
@@ -47,6 +52,7 @@ def game():
             if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
                 printBoard(board)
                 print("\nGame over. " + turn + " won!")
+                gameWon = True
                 break
 
         # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
@@ -62,7 +68,7 @@ def game():
     
     # Now we will ask if player wants to restart the game or not.
     restart = input("Do want to play Again?(y/n)")
-    if restart == "y" or restart == "Y":  
+    if restart == "y" or "Y":  
         for key in board_keys:
             board[key] = " "
 
