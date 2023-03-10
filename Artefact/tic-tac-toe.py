@@ -11,15 +11,12 @@ board_keys = []
 for key in board:
     board_keys.append(key)
 
-''' We will have to print the updated board after every move in the game and 
-    thus we will make a function in which we'll define the printBoard function
-    so that we can easily print the board everytime by calling this function. '''
-
+# Prints the current board state
 def printBoard(board):
     print(board['1'] + ' | ' + board['2'] + ' | ' + board['3'])
-    print('- + - + -')
+    print('― + ― + ―')
     print(board['4'] + ' | ' + board['5'] + ' | ' + board['6'])
-    print('- + - + -')
+    print('― + ― + ―')
     print(board['7'] + ' | ' + board['8'] + ' | ' + board['9'])
 
 # Now we'll write the main function which has all the gameplay functionality.
@@ -34,14 +31,22 @@ def game():
         printBoard(board)
         print("It's your turn, " + turn + ". Where would you like to place your symbol?")
 
-        move = input("Cell number: ")
+        # Asks the user for a cell number, rejects invalid inputs
+        while True:
+            try:
+                move = int(input("Cell number: "))
+            except ValueError:
+                print("Sorry, you must enter a valid cell number (a number between 1 and 9)")
+                continue
+            if move not in range(1, 10):
+                print("Sorry, you must enter a valid cell number (a number between 1 and 9)")
+                continue
+            else:
+                break
 
-        if move not in int(range(1, 9)):
-            print("Sorry, you must enter a valid cell number (a number between 1 to 9)")
-            move = input("Cell number: ")
-
-        if board[move] == ' ':
-            board[move] = turn
+        # Checks if the chosen cell is empty, adds the symbol if it is.
+        if board[str(move)] == ' ':
+            board[str(move)] = turn
             count += 1
         else:
             print("Sorry, that place is already filled.")
@@ -58,7 +63,7 @@ def game():
         # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
         if count == 9:
             print("\nGame Over.\n")                
-            print("It's a Tie!!")
+            print("It's a Tie!")
 
         # Now we have to change the player after every move.
         if turn == 'X':
@@ -67,12 +72,14 @@ def game():
             turn = 'X'        
     
     # Now we will ask if player wants to restart the game or not.
-    restart = input("Do want to play Again?(y/n)")
-    if restart == "y" or "Y":  
+    restart = input("Do want to play again?\nPress 'Y' for yes, 'N' for no: ")
+    if restart == "y" or restart == "Y":
+        print("Restarting...")
         for key in board_keys:
             board[key] = " "
-
-        game()
+    elif restart == "n" or restart == "N":
+        quit()
+    game()
 
 if __name__ == "__main__":
     game()
