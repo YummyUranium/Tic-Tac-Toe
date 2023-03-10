@@ -25,7 +25,7 @@ def start_game():
 
     while True:
         try:
-            gamemode_selected = int(input("Please enter 1 for singleplayer (human against computer), 2 for multiplayer (human against human), or 3 for simulation play (computer against computer): "))
+            gamemode_selected = int(input("Please enter:\n1 for singleplayer (human against computer)\n2 for multiplayer (human against human)\n3 for simulation play (computer against computer): "))
         except ValueError:
             print("Sorry, you must enter 1, 2 or 3.")
             continue
@@ -45,8 +45,17 @@ def start_game():
         print("Something has gone terribly wrong in the checking of what gamemode was selected...")
 
 def play_singleplayer_game():
-    print("Sorry, this functionality hasn't been added yet!")
-    quit()
+    while True:
+        try:
+            difficulty_selected = str(input("Please enter the difficulty you want:\n1 for Easy (the computer's moves are randomly selected)\n2 for Impossible (the computer will always select the optimal move): "))
+        except ValueError:
+            print("Sorry, please enter 1 or 2")
+            continue
+        if difficulty_selected != 1 or difficulty_selected != 2:
+            print("Sorry, please enter 1 or 2")
+            continue
+        else:
+            break
 
 # The main function which has all the singleplayer gameplay functionality.
 def play_multiplayer_game():
