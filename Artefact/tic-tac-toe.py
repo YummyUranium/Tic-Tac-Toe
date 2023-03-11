@@ -1,6 +1,10 @@
-# Game from https://medium.com/byte-tales/the-classic-tic-tac-toe-game-in-python-3-1427c68b8874
+# Original game from https://medium.com/byte-tales/the-classic-tic-tac-toe-game-in-python-3-1427c68b8874
+# Altered a lot.
+# Game is played in the console.
 
 import random
+import math
+import time
 
 # The board is represented with a dictionary and corresponding cell numbers
 board = {'1': ' ' , '2': ' ' , '3': ' ' ,
@@ -25,6 +29,20 @@ def restart_board():
     for key in board_keys:
             board[key] = " "
 
+def ask_to_restart():
+    while True:
+        # Asks if player wants to restart the game or not.
+        restart = input("Do want to play again?\nPress 'Y' for yes, 'N' for no: ")
+        if restart == "y" or restart == "Y":
+            print("Restarting...")
+            restart_board()
+            start_game()
+        elif restart == "n" or restart == "N":
+            quit()
+        else:
+            print("Sorry, no valid input was given.")
+            continue
+
 # Checks if the game has been won
 def is_game_won():
     if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
@@ -38,6 +56,13 @@ def is_game_draw():
         return True
     else:
         return False
+    
+# Changes the player
+def change_player():
+    if turn == 'X':
+        turn = 'O'
+    else:
+        turn = 'X'  
 
 # Returns an array of empty cells left
 def get_possible_moves():
@@ -46,6 +71,13 @@ def get_possible_moves():
         if board[key] == ' ':
             possible_moves.append(key)
     return possible_moves
+
+def get_best_move():
+    best_score = -math.inf
+    best_move = None
+    for move in get_possible_moves():
+        #TODO fucking fix this mate
+        break
 
 # Starts the game loop
 def start_game():
@@ -74,6 +106,7 @@ def start_game():
         print("Something has gone terribly wrong in the checking of what gamemode was selected...")
 
 def play_singleplayer_game():
+
     while True:
         difficulty_selected = int(input("Please enter the difficulty you want:\n1 for Easy (the computer's moves are randomly selected)\n2 for Impossible (the computer will always select the optimal move): "))
         if difficulty_selected == 1 or difficulty_selected == 2:
@@ -161,18 +194,7 @@ def play_singleplayer_game():
         else:
             print("Something has gone terribly wrong processing the difficulty selection")
         
-    while True:
-        # Asks if player wants to restart the game or not.
-        restart = input("Do want to play again?\nPress 'Y' for yes, 'N' for no: ")
-        if restart == "y" or restart == "Y":
-            print("Restarting...")
-            restart_board()
-            start_game()
-        elif restart == "n" or restart == "N":
-            quit()
-        else:
-            print("Sorry, no valid input was given.")
-            continue
+    ask_to_restart()
 
 # The main function which has all the singleplayer gameplay functionality.
 def play_multiplayer_game():
@@ -180,7 +202,6 @@ def play_multiplayer_game():
     turn = 'X'
     count = 0
     game_over = False
-
 
     while game_over == False:
         printBoard(board)
@@ -222,29 +243,64 @@ def play_multiplayer_game():
             restart_board()
             break
 
-        # Changes the player
-        if turn == 'X':
-            turn = 'O'
-        else:
-            turn = 'X'        
+        change_player()       
     
-    while True:
-        # Asks if player wants to restart the game or not.
-        restart = input("Do want to play again?\nPress 'Y' for yes, 'N' for no: ")
-        if restart == "y" or restart == "Y":
-            print("Restarting...")
-            restart_board()
-            start_game()
-        elif restart == "n" or restart == "N":
-            quit()
-        else:
-            print("Sorry, no valid input was given.")
-            continue
+    ask_to_restart()
 
 
 def play_simulation_game():
-    print("Sorry, this functionality hasn't been added yet!")
-    start_game()
+
+    while True:
+        mode_selected = int(input("Please enter the mode you want:\n1 for Random (the computer's moves are randomly selected)\n2 for Optimal (the computer will always select the optimal move): "))
+        if mode_selected == 1 or mode_selected == 2:
+            break
+        else:
+            print("Sorry, please enter 1 or 2")
+            continue
+
+    turn = 'X'
+    count = 0
+    game_over = False
+
+    printBoard(board)
+    print("\n―――――――――\n")
+    time.sleep(1)
+
+    while game_over == False:
+        if mode_selected == 1:
+            print("It is " + turn + "'s turn.")
+            # The computer selects a random square, and then places it's symbol in it.
+            random_square = random.choice(get_possible_moves())
+            board[str(random_square)] = turn
+
+            printBoard(board)
+
+            # Checks if player X or O has won.
+            if is_game_won():
+                print("\nGame over. " + turn + " won!")
+                game_over = True
+                break
+
+            # If neither X nor O wins and the board is full, we'll declare the result as a 'tie'.
+            if is_game_draw():
+                print("\nGame Over.\n")                
+                print("It's a tie!")
+                restart_board()
+                break
+
+            change_player()
+
+            time.sleep(1)
+            count += 1
+            print("\n―――――――――\n")
+        elif mode_selected == 2:
+            break
+        else:
+            print("Something has gone terribly wrong selecting simulation mode")
+            quit()
+
+    ask_to_restart()
+
 
 if __name__ == "__main__":
     start_game()
