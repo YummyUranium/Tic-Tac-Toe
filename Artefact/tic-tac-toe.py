@@ -1,6 +1,6 @@
 # Game from https://medium.com/byte-tales/the-classic-tic-tac-toe-game-in-python-3-1427c68b8874
 
-from random import randrange
+import random
 
 # The board is represented with a dictionary and corresponding cell numbers
 board = {'1': ' ' , '2': ' ' , '3': ' ' ,
@@ -20,6 +20,34 @@ def printBoard(board):
     print('― + ― + ―')
     print(board['7'] + ' | ' + board['8'] + ' | ' + board['9'])
 
+# Resets the board state
+def restart_board():
+    for key in board_keys:
+            board[key] = " "
+
+# Checks if the game has been won
+def is_game_won():
+    if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
+        return True
+    else:
+        return False
+
+# Checks if the game is drawed
+def is_game_draw():
+    if not is_game_won() and not get_possible_moves():
+        return True
+    else:
+        return False
+
+# Returns an array of empty cells left
+def get_possible_moves():
+    possible_moves = []
+    for key in board:
+        if board[key] == ' ':
+            possible_moves.append(key)
+    return possible_moves
+
+# Starts the game loop
 def start_game():
     print("Let's play Tic-Tac-Toe!")
     print("What gamemode would you like to play?")
@@ -66,14 +94,14 @@ def play_singleplayer_game():
 
             # Checks if player X or O has won, for every move after 5 moves. 
             if count >= 5:
-                if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
+                if is_game_won() == True:
                     printBoard(board)
-                    print("\nGame over. O won!")
+                    print("\nGame over. O won!\n")
                     game_over = True
                     break
                 
             # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-            if count == 9:
+            if is_game_draw():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
@@ -102,14 +130,14 @@ def play_singleplayer_game():
 
             # Checks if player X or O has won, for every move after 5 moves. 
             if count >= 5:
-                if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
+                if is_game_won():
                     printBoard(board)
                     print("\nGame over. X won!")
                     game_over = True
                     break
 
             # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-            if count == 9:
+            if is_game_draw():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
@@ -117,7 +145,7 @@ def play_singleplayer_game():
 
             # The computer selects a random square, checks if it's filled, and then places an 'O' in it.
             while True:
-                random_square = randrange(1, 9)
+                random_square = random.choice(get_possible_moves())
                 # Checks if the chosen cell is empty, adds the symbol if it is.
                 if board[str(random_square)] == ' ':
                     board[str(random_square)] = "O"
@@ -128,7 +156,8 @@ def play_singleplayer_game():
 
         # The computer's moves are impossible to win against
         elif difficulty_selected == 2:
-            break
+            print("Sorry, this functionality hasn't been added yet.")
+            start_game()
         else:
             print("Something has gone terribly wrong processing the difficulty selection")
         
@@ -180,14 +209,14 @@ def play_multiplayer_game():
 
         # Checks if player X or O has won, for every move after 5 moves. 
         if count >= 5:
-            if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
+            if is_game_won():
                 printBoard(board)
                 print("\nGame over. " + turn + " won!")
                 game_over = True
                 break
 
         # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-        if count == 9:
+        if is_game_draw():
             print("\nGame Over.\n")                
             print("It's a tie!")
             restart_board()
@@ -215,11 +244,7 @@ def play_multiplayer_game():
 
 def play_simulation_game():
     print("Sorry, this functionality hasn't been added yet!")
-    quit()
-
-def restart_board():
-    for key in board_keys:
-            board[key] = " "
+    start_game()
 
 if __name__ == "__main__":
     start_game()
