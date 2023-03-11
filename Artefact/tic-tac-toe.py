@@ -3,7 +3,7 @@
 # Game is played in the console.
 
 import random
-import math
+from math import inf as infinity
 import time
 
 players = ["X", "O"]
@@ -111,17 +111,17 @@ def get_best_move(state, player, current_player):
             move['score'] = result
         
         moves.append(move)
-
+    
     # Find best move
     best_move = None
     if player == current_player:
-        best = -math.inf
+        best = -infinity
         for move in moves:            
             if move['score'] > best:
                 best = move['score']
                 best_move = move['index']
     else:
-        best = math.inf
+        best = infinity
         for move in moves:
             if move['score'] < best:
                 best = move['score']
