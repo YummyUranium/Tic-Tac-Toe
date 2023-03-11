@@ -2,8 +2,6 @@
 
 from random import randrange
 
-game_over = False
-
 # The board is represented with a dictionary and corresponding cell numbers
 board = {'1': ' ' , '2': ' ' , '3': ' ' ,
             '4': ' ' , '5': ' ' , '6': ' ' ,
@@ -21,15 +19,6 @@ def printBoard(board):
     print(board['4'] + ' | ' + board['5'] + ' | ' + board['6'])
     print('― + ― + ―')
     print(board['7'] + ' | ' + board['8'] + ' | ' + board['9'])
-
-def check_if_game_won(count, turn):
-    global game_over
-    # Checks if player X or O has won, for every move after 5 moves. 
-    if count >= 5:
-        if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
-            printBoard(board)
-            print("\nGame over. " + turn + " won!")
-            game_over = True
 
 def start_game():
     print("Let's play Tic-Tac-Toe!")
@@ -79,7 +68,7 @@ def play_singleplayer_game():
             if count >= 5:
                 if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
                     printBoard(board)
-                    print("\nGame over. " + turn + " won!")
+                    print("\nGame over. O won!")
                     game_over = True
                     break
                 
@@ -102,7 +91,7 @@ def play_singleplayer_game():
                     continue
                 else:
                     break
-            print("here")
+            
             # Checks if the chosen cell is empty, adds the symbol if it is.
             if board[str(move)] == ' ':
                 board[str(move)] = turn
@@ -110,6 +99,21 @@ def play_singleplayer_game():
             else:
                 print("Sorry, that place is already filled.")
                 continue
+
+            # Checks if player X or O has won, for every move after 5 moves. 
+            if count >= 5:
+                if board['7'] == board['8'] == board['9'] != ' ' or board['4'] == board['5'] == board['6'] != ' ' or board['1'] == board['2'] == board['3'] != ' ' or board['1'] == board['4'] == board['7'] != ' ' or board['2'] == board['5'] == board['8'] != ' ' or board['3'] == board['6'] == board['9'] != ' ' or board['7'] == board['5'] == board['3'] != ' ' or board['1'] == board['5'] == board['9'] != ' ':
+                    printBoard(board)
+                    print("\nGame over. X won!")
+                    game_over = True
+                    break
+
+            # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
+            if count == 9:
+                print("\nGame Over.\n")                
+                print("It's a tie!")
+                restart_board()
+                break
 
             # The computer selects a random square, checks if it's filled, and then places an 'O' in it.
             while True:
