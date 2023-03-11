@@ -48,25 +48,28 @@ def ask_to_restart():
 # Checks if the game has been won
 def is_game_won(boardstate=list):
     if boardstate['7'] == boardstate['8'] == boardstate['9'] == "X" or boardstate['4'] == boardstate['5'] == boardstate['6'] == "X" or boardstate['1'] == boardstate['2'] == boardstate['3'] == "X" or boardstate['1'] == boardstate['4'] == boardstate['7'] == "X" or boardstate['2'] == boardstate['5'] == boardstate['8'] == "X" or boardstate['3'] == boardstate['6'] == boardstate['9'] == "X" or boardstate['7'] == boardstate['5'] == boardstate['3'] == "X" or boardstate['1'] == boardstate['5'] == boardstate['9'] == "X":
-        return True, "X"
+        return "X", "Done"
     elif boardstate['7'] == boardstate['8'] == boardstate['9'] == "O" or boardstate['4'] == boardstate['5'] == boardstate['6'] == "O" or boardstate['1'] == boardstate['2'] == boardstate['3'] == "O" or boardstate['1'] == boardstate['4'] == boardstate['7'] == "O" or boardstate['2'] == boardstate['5'] == boardstate['8'] == "O" or boardstate['3'] == boardstate['6'] == boardstate['9'] == "O" or boardstate['7'] == boardstate['5'] == boardstate['3'] == "O" or boardstate['1'] == boardstate['5'] == boardstate['9'] != ' ':
-        return True, "O"
+        return "O", "Done"
+    elif is_game_full(boardstate):
+        return None, "Draw"
     else:
-        return False, None
+        return None, "Not Done"
 
 # Checks if the game is drawed
-def is_game_draw(boardstate=list):
-    if not is_game_won(boardstate) and not get_possible_moves(boardstate):
-        return True
-    else:
-        return False
+def is_game_full(boardstate=list):
+    for key in boardstate:
+        if key == " ":
+            return True
+        else:
+            return False
     
 # Changes the player
 def change_player(player):
     if player == 'X':
-        player = 'O'
+        return 'O'
     else:
-        player = 'X'  
+        return 'X'  
 
 # Returns an array of empty cells left
 def get_possible_moves(boardstate=list):
@@ -77,51 +80,53 @@ def get_possible_moves(boardstate=list):
     return possible_moves
 
 def sim_move(boardstate=list, player=str, cell=int):
-    boardstate[int(cell) - 1] = player
+    boardstate[cell] = player
 
 # MINIMAX ALGORITHM YAY
-def get_best_move(boardstate=list, player=str, current_player=str):
-    if is_game_won(boardstate)[1] == player and is_game_won(boardstate)[0] == True:
+def get_best_move(state, player, current_player):
+
+    # Returns different values if the game has finished
+    winner, done = is_game_won(state)
+    if done == "Done" and winner == current_player: # If current player has won
         return (1, 0)
-    elif is_game_won(boardstate)[1] != player and is_game_won(boardstate)[0] == True:
+    elif done == "Done" and winner == change_player(current_player): # If other player has won
         return (-1, 0)
-    elif is_game_draw(boardstate):
+    elif done == "Draw":    # Draw condition
         return (0, 0)
-
+        
     moves = []
-    possible_moves = get_possible_moves(boardstate)
-
-    for possible_move in possible_moves:
+    empty_cells = get_possible_moves(state)
+    
+    for empty_cell in empty_cells:
         move = {}
-        move["index"] = possible_move
-        new_state = copy_game_state(boardstate)
-        sim_move(new_state, player, possible_move)
-
-        # i dont understand this at all wtf
+        move['index'] = empty_cell
+        new_state = copy_game_state(state)
+        sim_move(new_state, player, empty_cell)
+        
         if player == current_player:
-            result,_ = get_best_move(new_state, change_player(player))
-            move["score"] = result
+            result,_ = get_best_move(new_state, change_player(current_player), current_player)    # make more depth tree for other player
+            move['score'] = result
         else:
-            result,_ = get_best_move(new_state, player)
+            result,_ = get_best_move(new_state, current_player, current_player)    # make more depth tree for current player
             move['score'] = result
         
         moves.append(move)
-        
+
     # Find best move
     best_move = None
     if player == current_player:
         best = -math.inf
-        for move in moves:
-            if move["score"] > best:
-                best = move["score"]
-                best_move = move["index"]
+        for move in moves:            
+            if move['score'] > best:
+                best = move['score']
+                best_move = move['index']
     else:
         best = math.inf
         for move in moves:
             if move['score'] < best:
                 best = move['score']
                 best_move = move['index']
-    
+                
     return (best, best_move)
 
 def copy_game_state(boardstate=list):
@@ -178,16 +183,13 @@ def play_singleplayer_game():
             print_board(board)
             print("It's your turn. Where would you like to place your symbol?")
 
-            # Checks if player X or O has won, for every move after 5 moves. 
-            if count >= 5:
-                if is_game_won(board) == True:
-                    print_board(board)
-                    print("\nGame over. O won!\n")
-                    game_over = True
-                    break
-                
-            # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-            if is_game_draw():
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print_board(board)
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
+                game_over = True
+                break
+            elif is_game_won(board)[1] == "Draw":
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
@@ -214,16 +216,13 @@ def play_singleplayer_game():
                 print("Sorry, that place is already filled.")
                 continue
 
-            # Checks if player X or O has won, for every move after 5 moves. 
-            if count >= 5:
-                if is_game_won(board):
-                    print_board(board)
-                    print("\nGame over. X won!")
-                    game_over = True
-                    break
-
-            # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-            if is_game_draw():
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print_board(board)
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
+                game_over = True
+                break
+            elif is_game_won(board)[1] == "Draw":
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
@@ -242,8 +241,58 @@ def play_singleplayer_game():
 
         # The computer's moves are impossible to win against
         elif difficulty_selected == 2:
-            print("Sorry, this functionality hasn't been added yet.")
-            start_game()
+            print_board(board)
+            print("It's your turn. Where would you like to place your symbol?")
+
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print_board(board)
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
+                game_over = True
+                break
+            elif is_game_won(board)[1] == "Draw":
+                print("\nGame Over.\n")                
+                print("It's a tie!")
+                restart_board()
+                break
+
+            # Asks the user for a cell number, rejects invalid inputs
+            while True:
+                try:
+                    move = int(input("Cell number: "))
+                except ValueError:
+                    print("Sorry, you must enter a valid cell number (a number between 1 and 9)")
+                    continue
+                if move not in range(1, 10):
+                    print("Sorry, you must enter a valid cell number (a number between 1 and 9)")
+                    continue
+                else:
+                    break
+            
+            # Checks if the chosen cell is empty, adds the symbol if it is.
+            if board[str(move)] == ' ':
+                board[str(move)] = turn
+                count += 1
+            else:
+                print("Sorry, that place is already filled.")
+                continue
+
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print_board(board)
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
+                game_over = True
+                break
+            elif is_game_won(board)[1] == "Draw":
+                print("\nGame Over.\n")                
+                print("It's a tie!")
+                restart_board()
+                break
+
+            # The computer selects the best square and places an 'O' in it.
+            _, best_square = get_best_move(board, "O", "O")
+            board[str(best_square)] = "O"
+
         else:
             print("Something has gone terribly wrong processing the difficulty selection")
         
@@ -281,22 +330,19 @@ def play_multiplayer_game():
             print("Sorry, that place is already filled.")
             continue
 
-        # Checks if player X or O has won, for every move after 5 moves. 
-        if count >= 5:
-            if is_game_won(board):
-                print_board(board)
-                print("\nGame over. " + turn + " won!")
-                game_over = True
-                break
-
-        # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
-        if is_game_draw():
+        # Checks if the game is finished 
+        if is_game_won(board)[1] == "Done":
+            print_board(board)
+            print("\nGame over. " + is_game_won(board)[0] + " won!\n")
+            game_over = True
+            break
+        elif is_game_won(board)[1] == "Draw":
             print("\nGame Over.\n")                
             print("It's a tie!")
             restart_board()
             break
 
-        change_player(turn)       
+        turn = change_player(turn)       
     
     ask_to_restart()
 
@@ -328,20 +374,18 @@ def play_simulation_game():
 
             print_board(board)
 
-            # Checks if player X or O has won.
-            if is_game_won(board):
-                print("\nGame over. " + turn + " won!")
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 break
-
-            # If neither X nor O wins and the board is full, we'll declare the result as a 'tie'.
-            if is_game_draw():
+            elif is_game_won(board)[1] == "Draw":
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
                 break
 
-            change_player(turn)
+            turn = change_player(turn)
 
             time.sleep(1)
             count += 1
@@ -349,25 +393,23 @@ def play_simulation_game():
         elif mode_selected == 2:
             print("It is " + turn + "'s turn.\n")
             # The computer gets the best square
-            _,best_square = get_best_move(board, turn, turn)
+            _, best_square = get_best_move(board, turn, turn)
             board[str(best_square)] = turn
-            print(board)
             print_board(board)
 
-            # Checks if player X or O has won.
-            if is_game_won(board):
-                print("\nGame over. " + turn + " won!")
+            # Checks if the game is finished 
+            if is_game_won(board)[1] == "Done":
+                print_board(board)
+                print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 break
-
-            # If neither X nor O wins and the board is full, we'll declare the result as a 'tie'.
-            if is_game_draw():
+            elif is_game_won(board)[1] == "Draw":
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
                 break
 
-            change_player(turn)
+            turn = change_player(turn)
 
             time.sleep(1)
             count += 1
