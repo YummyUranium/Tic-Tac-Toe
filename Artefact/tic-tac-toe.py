@@ -51,7 +51,7 @@ def is_game_won(boardstate=list):
         return "X", "Done"
     elif boardstate['7'] == boardstate['8'] == boardstate['9'] == "O" or boardstate['4'] == boardstate['5'] == boardstate['6'] == "O" or boardstate['1'] == boardstate['2'] == boardstate['3'] == "O" or boardstate['1'] == boardstate['4'] == boardstate['7'] == "O" or boardstate['2'] == boardstate['5'] == boardstate['8'] == "O" or boardstate['3'] == boardstate['6'] == boardstate['9'] == "O" or boardstate['7'] == boardstate['5'] == boardstate['3'] == "O" or boardstate['1'] == boardstate['5'] == boardstate['9'] != ' ':
         return "O", "Done"
-    elif is_game_full(boardstate):
+    elif is_game_full(boardstate) == True:
         return None, "Draw"
     else:
         return None, "Not Done"
@@ -59,10 +59,9 @@ def is_game_won(boardstate=list):
 # Checks if the game is drawed
 def is_game_full(boardstate=list):
     for key in boardstate:
-        if key == " ":
-            return True
-        else:
+        if boardstate[key] == " ":
             return False
+    return True
     
 # Changes the player
 def change_player(player):
