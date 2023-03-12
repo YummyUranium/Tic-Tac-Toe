@@ -222,6 +222,7 @@ def play_singleplayer_game():
                 game_over = True
                 break
             elif is_game_won(board)[1] == "Draw":
+                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 restart_board()
@@ -398,7 +399,6 @@ def play_simulation_game():
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
-                print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 break
