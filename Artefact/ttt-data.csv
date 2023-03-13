@@ -1,6 +1,2 @@
 Game Number,Gamemode,Result,Winner,Game Length,Starting Cell,Final Board State
-1,"[1, 1]",Winner,X,5,,"['X', 'X', 'X', ' ', ' ', 'O', 'O', ' ', ' ']"
-2,"[1, 2]",Draw,None,5,,"[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']"
-3,"[2, None]",Winner,X,7,,"['X', 'O', 'X', 'O', 'X', 'O', 'X', ' ', ' ']"
-4,"[3, 1]",Winner,O,7,8,"['O', 'X', 'X', 'O', ' ', 'X', 'O', 'X', 'O']"
-5,"[3, 2]",Draw,None,8,1,"[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']"
+1,"[3, 2]",Draw,None,9,1,"['X', 'X', 'O', 'O', 'O', 'X', 'X', 'O', 'X']"

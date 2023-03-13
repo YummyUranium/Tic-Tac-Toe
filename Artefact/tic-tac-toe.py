@@ -17,10 +17,6 @@ with open("./Artefact/ttt-data.csv", "w", newline="") as file:
 
 game_number = None
 gamemode = None
-result = None
-winner = None
-starting_cell = None
-final_board_state = None
 
 def log_data(game_number, gamemode, result, winner, game_length, starting_cell, final_board_state):
     with open("./Artefact/ttt-data.csv", "a", newline="") as file:
@@ -233,7 +229,7 @@ def play_singleplayer_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -242,7 +238,7 @@ def play_singleplayer_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -277,7 +273,7 @@ def play_singleplayer_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -286,7 +282,7 @@ def play_singleplayer_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -317,7 +313,7 @@ def play_singleplayer_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -326,7 +322,7 @@ def play_singleplayer_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -361,7 +357,7 @@ def play_singleplayer_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -370,7 +366,7 @@ def play_singleplayer_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -429,7 +425,7 @@ def play_multiplayer_game():
             print_board(board)
             print("\nGame over. " + is_game_won(board)[0] + " won!\n")
             game_over = True
-            log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+            log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
             break
         elif is_game_won(board)[1] == "Draw":
             result = "Draw"
@@ -439,7 +435,7 @@ def play_multiplayer_game():
             print("It's a tie!")
             game_over = True
             restart_board()
-            log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+            log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
             break
 
         turn = change_player(turn)       
@@ -493,7 +489,7 @@ def play_simulation_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -502,7 +498,7 @@ def play_simulation_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -517,6 +513,7 @@ def play_simulation_game():
             gamemode[1] = 2
 
             print("It is " + turn + "'s turn.\n")
+            
             # The computer gets the best square
             _, best_square = get_best_move(board, turn, turn)
             board[str(best_square)] = turn
@@ -532,7 +529,7 @@ def play_simulation_game():
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -540,7 +537,7 @@ def play_simulation_game():
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
-                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
+                log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
                 restart_board()
                 break
 
