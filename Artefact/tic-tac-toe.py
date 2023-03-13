@@ -6,7 +6,27 @@ import random
 from math import inf as infinity
 import time
 
-players = ["X", "O"]
+import csv
+import pandas as pd
+
+header = ["Game Number", "Gamemode", "Result", "Winner", "Game Length", "Starting Cell", "Final Board State"]
+
+with open("./Artefact/ttt-data.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(header)
+
+game_number = None
+gamemode = None
+result = None
+winner = None
+starting_cell = None
+final_board_state = None
+
+def log_data(game_number, gamemode, result, winner, game_length, starting_cell, final_board_state):
+    with open("./Artefact/ttt-data.csv", "a", newline="") as file:
+        writer = csv.writer(file)
+        data_to_log = [game_number, gamemode, result, winner, game_length, starting_cell, final_board_state]
+        writer.writerow(data_to_log)
 
 # The board is represented with a dictionary and corresponding cell numbers
 board = {'1': ' ' , '2': ' ' , '3': ' ' ,
@@ -25,6 +45,12 @@ def print_board(board):
     print(board['4'] + ' | ' + board['5'] + ' | ' + board['6'])
     print('― + ― + ―')
     print(board['7'] + ' | ' + board['8'] + ' | ' + board['9'])
+
+def stringify_board(board):
+    board_string = []
+    for key in board_keys:
+        board_string.append(board[key])
+    return board_string
 
 # Resets the board state
 def restart_board():
@@ -138,6 +164,10 @@ def copy_game_state(boardstate=list):
 
 # Starts the game loop
 def start_game():
+
+    global game_number
+    global gamemode
+
     print("Let's play Tic-Tac-Toe!")
     print("What gamemode would you like to play?")
 
@@ -153,16 +183,26 @@ def start_game():
         else:
             break
     
+    data_file = pd.read_csv("./Artefact/ttt-data.csv")
+    game_number = data_file.shape[0] + 1
+
     if gamemode_selected == 1:
+        gamemode = [1, None]
         play_singleplayer_game()
     elif gamemode_selected == 2:
+        gamemode = [2, None]
         play_multiplayer_game()
     elif gamemode_selected == 3:
+        gamemode = [3, None]
         play_simulation_game()
     else:
         print("Something has gone terribly wrong in the checking of what gamemode was selected...")
 
 def play_singleplayer_game():
+
+    result = None
+    winner = None
+    starting_cell = None
 
     while True:
         difficulty_selected = int(input("Please enter the difficulty you want:\n1 for Easy (the computer's moves are randomly selected)\n2 for Impossible (the computer will always select the optimal move): "))
@@ -179,18 +219,30 @@ def play_singleplayer_game():
     while game_over == False:
         # Random moves from computer
         if difficulty_selected == 1:
+
+            # Logs the correct difficulty
+            gamemode[1] = 1
+
             print_board(board)
             print("It's your turn. Where would you like to place your symbol?")
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
+                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -215,16 +267,26 @@ def play_singleplayer_game():
                 print("Sorry, that place is already filled.")
                 continue
 
+            if count == 0:
+                starting_cell = move
+
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
                 print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -241,18 +303,30 @@ def play_singleplayer_game():
 
         # The computer's moves are impossible to win against
         elif difficulty_selected == 2:
+
+            # Logs the correct difficulty
+            gamemode[1] = 2
+
             print_board(board)
             print("It's your turn. Where would you like to place your symbol?")
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
+                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -276,16 +350,27 @@ def play_singleplayer_game():
             else:
                 print("Sorry, that place is already filled.")
                 continue
+                
+            if count == 0:
+                starting_cell = move
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
                 print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
+                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -300,6 +385,10 @@ def play_singleplayer_game():
 
 # The main function which has all the singleplayer gameplay functionality.
 def play_multiplayer_game():
+
+    result = None
+    winner = None
+    starting_cell = None
 
     turn = 'X'
     count = 0
@@ -330,16 +419,27 @@ def play_multiplayer_game():
             print("Sorry, that place is already filled.")
             continue
 
+        if count == 0:
+            starting_cell = move
+
         # Checks if the game is finished 
         if is_game_won(board)[1] == "Done":
+            result = "Winner"
+            winner = turn
             print_board(board)
             print("\nGame over. " + is_game_won(board)[0] + " won!\n")
             game_over = True
+            log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
             break
         elif is_game_won(board)[1] == "Draw":
+            result = "Draw"
+            winner = "None"
+            print_board(board)
             print("\nGame Over.\n")                
             print("It's a tie!")
+            game_over = True
             restart_board()
+            log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
             break
 
         turn = change_player(turn)       
@@ -348,6 +448,10 @@ def play_multiplayer_game():
 
 
 def play_simulation_game():
+
+    result = None
+    winner = None
+    starting_cell = None
 
     while True:
         mode_selected = int(input("Please enter the mode you want:\n1 for Random (the computer's moves are randomly selected)\n2 for Optimal (the computer will always select the optimal move): "))
@@ -367,21 +471,38 @@ def play_simulation_game():
 
     while game_over == False:
         if mode_selected == 1:
+
+            # Logs the correct difficulty
+            gamemode[1] = 1
+
             print("It is " + turn + "'s turn.\n")
+
             # The computer selects a random square, and then places it's symbol in it.
             random_square = random.choice(get_possible_moves(board))
             board[str(random_square)] = turn
+
+            if count == 0:
+                starting_cell = random_square
 
             print_board(board)
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
+                print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
+                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -391,20 +512,35 @@ def play_simulation_game():
             count += 1
             print("\n―――――――――\n")
         elif mode_selected == 2:
+
+            # Logs the correct difficulty
+            gamemode[1] = 2
+
             print("It is " + turn + "'s turn.\n")
             # The computer gets the best square
             _, best_square = get_best_move(board, turn, turn)
             board[str(best_square)] = turn
             print_board(board)
+            
+            if count == 0:
+                starting_cell = best_square
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
+                result = "Winner"
+                winner = turn
+                print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 break
             elif is_game_won(board)[1] == "Draw":
+                result = "Draw"
+                winner = "None"
                 print("\nGame Over.\n")                
                 print("It's a tie!")
+                game_over = True
+                log_data(game_number, gamemode, result, winner, count, starting_cell, stringify_board(board))
                 restart_board()
                 break
 
@@ -418,7 +554,6 @@ def play_simulation_game():
             quit()
 
     ask_to_restart()
-
 
 if __name__ == "__main__":
     start_game()
