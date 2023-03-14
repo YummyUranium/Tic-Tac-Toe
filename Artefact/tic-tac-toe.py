@@ -297,6 +297,8 @@ def play_singleplayer_game():
                 else:
                     continue
 
+            time.sleep(0.5)
+
         # The computer's moves are impossible to win against
         elif difficulty_selected == 2:
 
@@ -373,6 +375,8 @@ def play_singleplayer_game():
             # The computer selects the best square and places an 'O' in it.
             _, best_square = get_best_move(board, "O", "O")
             board[str(best_square)] = "O"
+
+            time.sleep(0.5)
 
         else:
             print("Something has gone terribly wrong processing the difficulty selection")
