@@ -179,6 +179,7 @@ def start_game():
         else:
             break
     
+    # Returns how many lines in the csv file, numbers the new line appropriately
     data_file = pd.read_csv("./Artefact/ttt-data.csv")
     game_number = data_file.shape[0] + 1
 
@@ -486,7 +487,6 @@ def play_simulation_game():
             if is_game_won(board)[1] == "Done":
                 result = "Winner"
                 winner = turn
-                print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
@@ -494,7 +494,6 @@ def play_simulation_game():
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
                 winner = "None"
-                print_board(board)
                 print("\nGame Over.\n")                
                 print("It's a tie!")
                 game_over = True
@@ -526,7 +525,6 @@ def play_simulation_game():
             if is_game_won(board)[1] == "Done":
                 result = "Winner"
                 winner = turn
-                print_board(board)
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
