@@ -8,14 +8,14 @@ import csv
 
 header = ["Game Number", "Gamemode", "Result", "Winner", "Game Length", "Starting Cell", "Final Board State"]
 
-with open("ttt-data.csv", "w", newline="") as file:
+with open("./Artefact/ttt-data.csv", "w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(header)
 
 game_number = 1
 
 def log_data(game_number, gamemode, result, winner, game_length, starting_cell, final_board_state):
-    with open("ttt-data.csv", "a", newline="") as file:
+    with open("./Artefact/ttt-data.csv", "a", newline="") as file:
         writer = csv.writer(file)
         data_to_log = [game_number, gamemode, result, winner, game_length, starting_cell, final_board_state]
         writer.writerow(data_to_log)
@@ -83,6 +83,9 @@ def start_game():
     while True:
         try:
             runs = int(input("How many times would you like to run the program?\nRuns: "))
+            if runs <= 0:
+                print("Sorry, the amount entered must be positive!")
+                continue
         except ValueError:
             print("Sorry, you must enter a valid integer")
             continue
