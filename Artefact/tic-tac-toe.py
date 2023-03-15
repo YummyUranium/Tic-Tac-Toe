@@ -231,6 +231,7 @@ def play_singleplayer_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -275,6 +276,7 @@ def play_singleplayer_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -317,6 +319,7 @@ def play_singleplayer_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -361,6 +364,7 @@ def play_singleplayer_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -431,6 +435,7 @@ def play_multiplayer_game():
             print("\nGame over. " + is_game_won(board)[0] + " won!\n")
             game_over = True
             log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+            restart_board()
             break
         elif is_game_won(board)[1] == "Draw":
             result = "Draw"
@@ -494,6 +499,7 @@ def play_simulation_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
@@ -532,6 +538,7 @@ def play_simulation_game():
                 print("\nGame over. " + is_game_won(board)[0] + " won!\n")
                 game_over = True
                 log_data(game_number, gamemode, result, winner, (count + 1), starting_cell, stringify_board(board))
+                restart_board()
                 break
             elif is_game_won(board)[1] == "Draw":
                 result = "Draw"
