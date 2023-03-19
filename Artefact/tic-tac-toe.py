@@ -260,13 +260,12 @@ def play_singleplayer_game():
             # Checks if the chosen cell is empty, adds the symbol if it is.
             if board[str(move)] == ' ':
                 board[str(move)] = turn
+                if count == 0:
+                    starting_cell = move
                 count += 1
             else:
                 print("Sorry, that place is already filled.")
                 continue
-
-            if count == 0:
-                starting_cell = move
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
@@ -348,13 +347,12 @@ def play_singleplayer_game():
             # Checks if the chosen cell is empty, adds the symbol if it is.
             if board[str(move)] == ' ':
                 board[str(move)] = turn
+                if count == 0:
+                    starting_cell = move
                 count += 1
             else:
                 print("Sorry, that place is already filled.")
                 continue
-                
-            if count == 0:
-                starting_cell = move
 
             # Checks if the game is finished 
             if is_game_won(board)[1] == "Done":
@@ -419,13 +417,12 @@ def play_multiplayer_game():
         # Checks if the chosen cell is empty, adds the symbol if it is.
         if board[str(move)] == ' ':
             board[str(move)] = turn
+            if count == 0:
+                starting_cell = move
             count += 1
         else:
             print("Sorry, that place is already filled.")
             continue
-
-        if count == 0:
-            starting_cell = move
 
         # Checks if the game is finished 
         if is_game_won(board)[1] == "Done":
