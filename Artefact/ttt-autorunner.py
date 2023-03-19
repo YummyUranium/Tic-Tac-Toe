@@ -30,6 +30,7 @@ board_keys = []
 for key in board:
     board_keys.append(key)
 
+# For logging the final board state
 def stringify_board(board):
     board_string = []
     for key in board_keys:
@@ -123,14 +124,14 @@ def play_simulation_game():
             result = "Winner"
             winner = turn
             game_over = True
-            log_data(game_number, (3, 1), result, winner, (count + 1), starting_cell, stringify_board(board))
+            log_data(game_number, ("Simulation Play", "Random"), result, winner, (count + 1), starting_cell, stringify_board(board))
             restart_board()
             break
         elif is_game_won(board)[1] == "Draw":
             result = "Draw"
             winner = "None"
             game_over = True
-            log_data(game_number, (3, 1), result, winner, (count + 1), starting_cell, stringify_board(board))
+            log_data(game_number, ("Simulation Play", "Random"), result, winner, (count + 1), starting_cell, stringify_board(board))
             restart_board()
             break
 

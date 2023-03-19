@@ -184,13 +184,13 @@ def start_game():
     game_number = data_file.shape[0] + 1
 
     if gamemode_selected == 1:
-        gamemode = [1, None]
+        gamemode = ["Singleplayer", None]
         play_singleplayer_game()
     elif gamemode_selected == 2:
-        gamemode = [2, None]
+        gamemode = ["Multiplayer", None]
         play_multiplayer_game()
     elif gamemode_selected == 3:
-        gamemode = [3, None]
+        gamemode = ["Simulation Play", None]
         play_simulation_game()
     else:
         print("Something has gone terribly wrong in the checking of what gamemode was selected...")
@@ -218,7 +218,7 @@ def play_singleplayer_game():
         if difficulty_selected == 1:
 
             # Logs the correct difficulty
-            gamemode[1] = 1
+            gamemode[1] = "Random"
 
             print_board(board)
             print("It's your turn. Where would you like to place your symbol?")
@@ -306,7 +306,7 @@ def play_singleplayer_game():
         elif difficulty_selected == 2:
 
             # Logs the correct difficulty
-            gamemode[1] = 2
+            gamemode[1] = "Optimal"
 
             print_board(board)
             print("It's your turn. Where would you like to place your symbol?")
@@ -479,7 +479,7 @@ def play_simulation_game():
         if mode_selected == 1:
 
             # Logs the correct difficulty
-            gamemode[1] = 1
+            gamemode[1] = "Random"
 
             print("It is " + turn + "'s turn.\n")
 
@@ -519,7 +519,7 @@ def play_simulation_game():
         elif mode_selected == 2:
 
             # Logs the correct difficulty
-            gamemode[1] = 2
+            gamemode[1] = "Optimal"
 
             print("It is " + turn + "'s turn.\n")
             
