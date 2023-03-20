@@ -57,7 +57,7 @@
                     </ul>
                 </li>
                 <br>
-                <li>2048
+                <li>2048 - (<a href="https://play2048.co/">example</a>)
                     <ul>
                         <li>Pros:
                             <ul>
@@ -87,7 +87,7 @@
                         <li>Cons:
                             <ul>
                                 <li>Weakly solved (given perfect play, it is a draw)</li>
-                                <li>Graphically uninteresting</li>
+                                <li>Difficult to analyse</li>
                             </ul>
                         </li>
                     </ul>
@@ -128,12 +128,75 @@
                     </ul>
                 </li>
             </ul>
-            
+            <p>
+                I selected Battleship as the most promising game, due to the little cons and the personal interest I have in finding out what the best strategy to play is.
+                I started doing some research into various ways people coded Battleship.
+                I quickly realised that Battleship was far too complex for the scope of this project, and instead chose a much simpler game - Tic Tac Toe.
+                I predicted that this would allow me to focus more of my time on making the game fun to play, instead of having an unfinished complex game.
+            </p>
+            <p>
+                A personal objective was to have an option to allow the computer to play the best moves possible, so I did some research on different algorithms that might be suitable for the computer to use.
+                There was an overwhelming consensus online that a minimax algorithm <a href="./index.html#ref1">[1]</a> was the only man for the job, and so I settled for that.
+            </p>
+            <p>
+                My final plan from this research was to make a tic tac toe game, allow the user to play it through a Tkinter window, allow the singleplayer and simulation play modes to have both random and optimal modes for the computer, to store data from this game in a csv file, and to use the pandas and matplotlib libraries to analyse this data.
+            </p>
             <h2 id="d-title">Design</h2>
+            <img src="./content/PXL_20230320_134859561.jpg" alt="An image showing a flowchart detailing the game process.">
+            <p>
+                I created a flowchart to show the various decision points and branches that this game would require.
+                This allowed me to focus on different sections of code and design them individually.
+                Then, I made out a list of functions that would be required.
+            </p>
+            <ul>
+                <li>Print the board</li>
+                <li>Start the game</li>
+                <li>Restart the game</li>
+                <li>Check if the game has been won</li>
+                <li>Check if the game has been drawed</li>
+                <li>Change the player</li>
+                <li>Seperate functions for each game mode</li>
+                <li>Minimax algorithm</li>
+                <li>Log data</li>
+            </ul>
+            <p>
+                I decided against making a function for making a random move as that was so simple that it would be faster for the computer to run the two lines than to search for a function and run the two lines.
+            </p>
+            <p>
+                I would use abstraction to turn the board into a dictionary and each individual cell into a number from 1 to 9.
+                I would model the computer player as a minimax algorithm or a random number from 1 to 9 generator, depending on the user's selection.
+            </p>
             <h2 id="i-title">Implementation</h2>
+            <p>
+                Originally, I used code from a RealPython tutorial <a href="./index.html#ref2">[2]</a> to build my game, but after a few weeks of fiddling with Tkinter, I gave up on having a GUI and instead opted to have the user play the game through the console, which would allow me to bugtest problems much more easily, and not have to deal with the headache of graphic design.
+            </p>
+            <p>
+                Using the code from a Medium article <a href="./index.html#ref3">[3]</a>, I built a prototype quickly and then started to expand on it, adding the random computer selection for singleplayer and simulation, adding input testing so that the game wouldn't crash if the user entered the wrong number at any decision point.
+                The big problem came with the minimax algorithm, which was quite a difficult, abstract concept to wrap my head around.
+                It took a while for me to realise that the very first if statement, checking if the state was a win or a loss, was what every single recall of the function was working towards.
+                I had a lot of problems with reading the game board, too, and if I were to restart the project, I would use an array rather than a dictionary like the example code I started with used.
+                The lifesaving sources I had to make sure I wasn't losing my mind was the two examples of the minimax algorithm being used for tic tac toe - <a href="./index.html#ref4">[4]</a> and <a href="./index.html#ref5">[5]</a>.
+            </p>
+            <p>
+                With the whole game playable in all the required modes, I could focus on the data and data analysis.
+                Instrumental in this stage of implementation was the script I wrote to automate the data gathering - the "ttt-autorunner.py".
+                This program ran however many games I wanted, which gave me a great big sample size to analyse.
+                This proved essential to test various hypotheses such as whether there would be a difference in starting cells, as can be seen in the above video.
+                matplotlib and pandas were tricky to work with, as there was such a choice to choose from that I had difficulty using the correct functions and variable names.
+                It was also in this stage of implementation that I fully understood the lack of data points to visualise graphically, a failure on my part in the investigation stage of this project.
+                I made use of a Programiz article <a href="./index.html#ref6">[6]</a> to help with the implementation of writing to the CSV file.
+            </p>
             <h2 id="t-title">Testing</h2>
             <h2 id="e-title">Evaluation</h2>
             <h2 id="r-title">References</h2>
+            <ol>
+                <li id="ref1">Minimax wikipedia - <a href="https://en.wikipedia.org/wiki/Minimax">https://en.wikipedia.org/wiki/Minimax</a></li>
+                <li id="ref2">Tic Tac Toe with Tkinter tutorial - <a href="https://realpython.com/tic-tac-toe-python/">https://realpython.com/tic-tac-toe-python/</a></li>
+                <li id="ref3">Tic Tac Toe tutorial - <a href="https://medium.com/byte-tales/the-classic-tic-tac-toe-game-in-python-3-1427c68b8874">https://medium.com/byte-tales/the-classic-tic-tac-toe-game-in-python-3-1427c68b8874</a></li>
+                <li id="ref4">Minimax sample from question - <a href="https://stackoverflow.com/questions/64644532/minimax-algorithm-in-python-using-tic-tac-toe">https://stackoverflow.com/questions/64644532/minimax-algorithm-in-python-using-tic-tac-toe</a></li>
+                <li id="ref5">Minimax example - <a href="https://github.com/agrawal-rohit/tic-tac-toe-bot/blob/master/HumanvsAI_Minimax.py">https://github.com/agrawal-rohit/tic-tac-toe-bot/blob/master/HumanvsAI_Minimax.py</a></li>
+                <li id="ref6">CSV help - <a href="https://www.programiz.com/python-programming/writing-csv-files">https://www.programiz.com/python-programming/writing-csv-files</a></li>
+            </ol>
             <h2 id="sawc-title">Summary and Word Count</h2>
             <table class="tg">
                 <thead>
@@ -174,7 +237,5 @@
                 </tbody>
             </table>
         </div>
-
-        <script src="app.js"></script>
     </body>
 </html>
