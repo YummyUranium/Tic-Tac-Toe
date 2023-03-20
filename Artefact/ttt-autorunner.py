@@ -112,12 +112,13 @@ def play_simulation_game():
     game_over = False
     while game_over == False:
 
-        # The computer selects a random square, and then places it's symbol in it.
-        random_square = random.choice(get_possible_moves(board))
-        board[str(random_square)] = turn
-
         if count == 0:
-            starting_cell = random_square
+            board["2"] = turn
+            starting_cell = 2
+        else:
+            # The computer selects a random square, and then places it's symbol in it.
+            random_square = random.choice(get_possible_moves(board))
+            board[str(random_square)] = turn
 
         # Checks if the game is finished 
         if is_game_won(board)[1] == "Done":

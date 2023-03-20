@@ -7,10 +7,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Tic Tac Toe Report</title>
+        <title>Tic Tac Toe Project Report</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./style.css">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -18,27 +18,163 @@
         <![endif]-->
 
         <header class="header-menu">
-            <a class="header-button" href="/Report/index.html#h-title">Home</a>
-            <a class="header-button" href="/Report/index.html#mtb-title">Meeting the Brief</a>
-            <a class="header-button" href="/Report/index.html#iap-title">Investigation and Plan</a>
-            <a class="header-button" href="/Report/index.html#d-title">Design</a>
-            <a class="header-button" href="/Report/index.html#i-title">Implementation</a>
-            <a class="header-button" href="/Report/index.html#t-title">Testing</a>
-            <a class="header-button" href="/Report/index.html#e-title">Evaluation</a>
-            <a class="header-button" href="/Report/index.html#r-title">References</a>
+            <a class="header-button" href="./index.html#h-title">Back to the Top</a>
+            <a class="header-button" href="./index.html#mtb-title">Meeting the Brief</a>
+            <a class="header-button" href="./index.html#iap-title">Investigation and Plan</a>
+            <a class="header-button" href="./index.html#d-title">Design</a>
+            <a class="header-button" href="./index.html#i-title">Implementation</a>
+            <a class="header-button" href="./index.html#t-title">Testing</a>
+            <a class="header-button" href="./index.html#e-title">Evaluation</a>
+            <a class="header-button" href="./index.html#r-title">References</a>
+            <a class="header-button" href="./index.html#sawc-title">Summary and Word Count</a>
         </header>
 
-        <h1 id="h-title">Computer Science Project:</h1>
-        <h1>Tic Tac Toe</h1>
+        <div class="report">
+            <h1 id="h-title">Computer Science Project: Tic Tac Toe</h1>
 
-        <h2 id="mtb-title">Meeting the Brief</h2>
-        <h2 id="iap-title">Investigation and Plan</h2>
-        <h2 id="d-title">Design</h2>
-        <h2 id="i-title">Implementation</h2>
-        <h2 id="t-title">Testing</h2>
-        <h2 id="e-title">Evaluation</h2>
-        <h2 id="r-title">References</h2>
-        
-        <script src="" async defer></script>
+            <h2 id="mtb-title">Meeting the Brief</h2>
+            <video controls>
+                <source src="./content/cs project meeting the brief.mp4" type="video/mp4">
+                Your browser doesn't support the video element. Consider using a different browser!
+            </video>
+            <h2 id="iap-title">Investigation and Plan</h2>
+            I started my investigation of the brief by first listing a number of different games, and then writing all of the pros and cons associated with them.
+            <ul>
+                <li>Tic Tac Toe
+                    <ul>
+                        <li>Pros:
+                            <ul>
+                                <li>Easy to code</li>
+                                <li>Easy to learn</li>
+                            </ul>
+                        </li>
+                        <li>Cons:
+                            <ul>
+                                <li>Simplistic</li>
+                                <li>Solved game</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <li>2048
+                    <ul>
+                        <li>Pros:
+                            <ul>
+                                <li>Skillful</li>
+                                <li>Plenty of randomness</li>
+                                <li>Easily understandable</li>
+                            </ul>
+                        </li>
+                        <li>Cons:
+                            <ul>
+                                <li>Relatively complex to code</li>
+                                <li>Results in very long games</li>
+                                <li>No multiplayer functionality</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <li>Draughts
+                    <ul>
+                        <li>Pros:
+                            <ul>
+                                <li>Easily understandable</li>
+                                <li>Easy to code</li>
+                            </ul>
+                        </li>
+                        <li>Cons:
+                            <ul>
+                                <li>Weakly solved (given perfect play, it is a draw)</li>
+                                <li>Graphically uninteresting</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <li>Blackjack
+                    <ul>
+                        <li>Pros:
+                            <ul>
+                                <li>Easy to learn and code</li>
+                                <li>Randomness</li>
+                            </ul>
+                        </li>
+                        <li>Cons:
+                            <ul>
+                                <li>Little data to analyse</li>
+                                <li>Little replayability</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <li>Battleship
+                    <ul>
+                        <li>Pros:
+                            <ul>
+                                <li>Analytically interesting</li>
+                                <li>High replayability</li>
+                                <li>Easy to understand and code</li>
+                            </ul>
+                        </li>
+                        <li>Cons:
+                            <ul>
+                                <li>Potentially long games</li>
+                                <li>Potentially complex to model</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h2 id="d-title">Design</h2>
+            <h2 id="i-title">Implementation</h2>
+            <h2 id="t-title">Testing</h2>
+            <h2 id="e-title">Evaluation</h2>
+            <h2 id="r-title">References</h2>
+            <h2 id="sawc-title">Summary and Word Count</h2>
+            <table class="tg">
+                <thead>
+                  <tr>
+                    <th class="table-header">Section</th>
+                    <th class="table-header">Word Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-element">1. Meeting the Brief</td>
+                    <td class="table-element"><span class="word-count word-count-mtb"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">2. Investigation and Plan</td>
+                    <td class="table-element"><span class="word-count word-count-iap"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">3. Design</td>
+                    <td class="table-element"><span class="word-count word-count-d"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">4. Implementation</td>
+                    <td class="table-element"><span class="word-count word-count-i"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">5. Testing</td>
+                    <td class="table-element"><span class="word-count word-count-t"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">6. Evaluation</td>
+                    <td class="table-element"><span class="word-count word-count-e"></span></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">Total:</td>
+                    <td class="table-element"><span class="word-count word-count-total"></span></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="app.js"></script>
     </body>
 </html>
