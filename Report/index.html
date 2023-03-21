@@ -18,7 +18,6 @@
         <![endif]-->
 
         <header class="header-menu">
-            <a class="header-button" href="./index.html#h-title">Back to the Top</a>
             <a class="header-button" href="./index.html#mtb-title">Meeting the Brief</a>
             <a class="header-button" href="./index.html#iap-title">Investigation and Plan</a>
             <a class="header-button" href="./index.html#d-title">Design</a>
@@ -39,6 +38,7 @@
             </video>
             <h2 id="iap-title">Investigation and Plan</h2>
             <p>
+                I knew immediately upon reading the brief that I wanted to use this opportunity to find out the best strategy to win in whatever game I chose.
                 I started my investigation of the brief by first listing a number of different games, and then writing all of the pros and cons associated with them.
             </p>
             <ul>
@@ -52,7 +52,7 @@
                         </li>
                         <li>Cons:
                             <ul>
-                                <li>Simplistic</li>
+                                <li>Boring</li>
                                 <li>Solved game</li>
                             </ul>
                         </li>
@@ -135,6 +135,7 @@
                 I started doing some research into various ways people coded Battleship.
                 I quickly realised that Battleship was far too complex for the scope of this project, and instead chose a much simpler game - Tic Tac Toe.
                 I predicted that this would allow me to focus more of my time on making the game fun to play, instead of having an unfinished complex game.
+                I briefly planned to use a game engine called Godot to program this game, as this would allow me to have a Graphical User Interface, but this added an unnecessary level of difficulty to the project, so I eventually decided against it.
             </p>
             <p>
                 A personal objective was to have an option to allow the computer to play the best moves possible, so I did some research on different algorithms that might be suitable for the computer to use.
@@ -144,6 +145,11 @@
                 My final plan from this research was to make a tic tac toe game, allow the user to play it through a Tkinter window, allow the singleplayer and simulation play modes to have both random and optimal modes for the computer, to store data from this game in a csv file, and to use the pandas and matplotlib libraries to analyse this data.
             </p>
             <h2 id="d-title">Design</h2>
+            <p>
+                I first planned on having a main menu with options for settings, play and quitting.
+                In settings there would have been options to change things like the colour of the board, the players, the background, game window size, and changing the symbols themselves.
+                I even planned on having multiple font options and the like.
+            </p>
             <img src="./content/PXL_20230320_134859561.jpg" alt="An image showing a flowchart detailing the game process.">
             <p>
                 I created a flowchart to show the various decision points and branches that this game would require.
@@ -151,29 +157,40 @@
                 Then, I made out a list of functions that would be required.
             </p>
             <ul>
-                <li>Print the board</li>
                 <li>Start the game</li>
+                <li>Display the board</li>
                 <li>Restart the game</li>
                 <li>Check if the game has been won</li>
                 <li>Check if the game has been drawed</li>
                 <li>Change the player</li>
-                <li>Separate functions for each game mode</li>
+                <li>Separate functions for starting each game mode</li>
+                <li>Logging settings data in a JSON file</li>
                 <li>Minimax algorithm</li>
                 <li>Log data</li>
             </ul>
             <p>
                 I decided against making a function for making a random move as that was so simple that it would be faster for the computer to run the two lines than to search for a function and run the two lines.
+                This remains an exception to my rule of thumb of "readable code is better than fast code".
             </p>
             <p>
-                I would use abstraction to turn the board into a dictionary and each individual cell into a number from 1 to 9.
-                I would model the computer player as a minimax algorithm or a random number from 1 to 9 generator, depending on the user's selection.
+                I used abstraction to turn the board into a dictionary and each individual cell into a number from 1 to 9.
+                I modelled the computer player as a minimax algorithm or a random number from 1 to 9 generator, depending on the user's selection.
+            </p>
+            <p>
+                My final designn at this stage was a tic tac toe game, played through a Tkinter window, that would have a settings menu to customise the game window, and options for all three gamemodes with Random moves and Optimal moves the two options for the computer.
+                After I later changed my mind about using Tkinter and instead using only the console, I changed the design a bit.
+                I got rid of the idea for a settings menu.
+                I did some brief research into animating the text in the console and changing the colour, but I could only find examples that used an external library, of which I was using too many already.
+                I opted instead for the simplest graphical approach, and allowed myself the option of later adding colour or animation.
             </p>
             <h2 id="i-title">Implementation</h2>
             <p>
                 Originally, I used code from a RealPython tutorial <a href="./index.html#ref2">[2]</a> to build my game, but after a few weeks of fiddling with Tkinter, I gave up on having a GUI and instead opted to have the user play the game through the console, which would allow me to bugtest problems much more easily, and not have to deal with the headache of graphic design.
+                I revisited the design stage to plan out what the game would look like, and decided to get rid of the planned settings.
             </p>
             <p>
                 Using the code from a Medium article <a href="./index.html#ref3">[3]</a>, I built a prototype quickly and then started to expand on it, adding the random computer selection for singleplayer and simulation, adding input testing so that the game wouldn't crash if the user entered the wrong number at any decision point.
+                I added input testing to reject bad input, and added a one second delay after computer moves to make the user feel like the computer was thinking.
                 The big problem came with the minimax algorithm, which was quite a difficult, abstract concept to wrap my head around.
                 It took a while for me to realise that the very first if statement, checking if the state was a win or a loss, was what every single recall of the function was working towards.
                 I had a lot of problems with reading the game board, too, and if I were to restart the project, I would use an array rather than a dictionary like the example code I started with used.
@@ -191,7 +208,7 @@
             </p>
             <h2 id="t-title">Testing</h2>
             <p>
-                I made sure that at for any input the user makes, the program would reject bad input and only accept good input, asking again if the input didn't match the requirements.
+                I made sure that for any input the user makes, the program would reject bad input and only accept good input, asking again if the input didn't match the requirements.
                 As you can see in the below testing table, I made sure all kinds of possible inputs, between strings, floats and negative integers were accounted for.
             </p>
             <table class="tg">
@@ -240,12 +257,42 @@
             <p>
                 I encountered many problems while testing my program.
                 For instance, when working on the singleplayer game, which was an edited version of the multiplayer game, I found that the game wasn't ending properly, and realised I had to make the game win check at the start of the while loop.
-                I also, as mentioned above, had difficulty with the minimax algorithm. Eventually I found that the issue was with the games board being abstracted as a dictionary, rather than a much easier array, or list, and the minimax was reading the dictionary key rather than the key's value.
+                I also, as mentioned above, had difficulty with the minimax algorithm.
+                Eventually I found that the issue was with the games board being abstracted as a dictionary, rather than a much easier array, or list, and the minimax was reading the dictionary key rather than the key's value.
                 Throughout, I had difficulty with making sure that integers were read as strings to the console but interpreted as integers in the code. I tested this as necessary by using <code>print(type(variable_name))</code>.
+            </p>
+            <p>
+                I used a number of different tests in this project.
+                For example, I used performance testing on different functions to evaluate how much the performance decreased with increased complexity in the code.
+                I ultimately decided that the performance cost was insignificant and that having readable code was more important than saving a second or two in running the code.
+            </p>
+            <p>
+                Throughout the integration step, I did many "smoke tests" as soon as a function or snippet was implemented.
+                A fast testing and prototyping cycle was essential for me to complete the project as fast as I could, which allowed for fluid programming and quick bug testing.
+                The code was simple enough to understand that I could write what modules I needed, and then after the fact go back and add comments and clean up unnecessary lines.
+                At various stages, too, I performed unit testing on different functions to ensure their strength.
+                I used integration testing, too, to verify that all of the different functions at play didn't break each other.
             </p>
             <h2 id="e-title">Evaluation</h2>
             <p>
-                Overall, I was very happy with the project. I achieved all of my objectives and managed to implement my personal objective of having the computer be able to play perfectly.
+                Overall, I was very happy with the project.
+                I achieved all of my objectives and managed to implement my personal objective of having the computer be able to play perfectly.
+                There are a number of things I wish I had the time to implement.
+                I'm disappointed not to be able to display the game graphically.
+                Tkinter might have been easier to use than I initially thought, but I wasn't prepared to risk wasting a lot of time on something that would only serve to lengthen the amount of time it took to finish the project.
+                I still think it would have been very cool to be able to change the colour of things like the background and board, and changing the labels.
+                As I've mentioned before, basing the board as a dictionary was a mistake.
+                In future, I would use an array or list.
+                I was happy with my decision to use a number between 1 and 9 for each cell, rather than an 'A1', 'B2', 'C3' naming convention, as this made playing the game faster, and therefore easier to bug test.
+                I would have liked to make the "Optimal" moves play different games each time, but I'm not entirely sure how I'd go about that.
+                I'm disappointed with the analyser file.
+                I think I could've planned more time for that section of work, so that I would be able to show more data or display better graphs.
+                Ultimately, I wanted to have a fun game, and I am confident I've succeeded.
+                I'm especially proud of the autorunner file, as it remains a piece of code I can hopefully modify in future if I want to learn more about data analysis.
+            </p>
+            <p>
+                For the project as a whole, I remain disappointed that I wasn't able to do my project on Battleship.
+                I can accept that this is an unrealistic dream, as I struggled enough with tic tac toe, one of the simpler games on my original list.
             </p>
             <h2 id="r-title">References</h2>
             <ol>
@@ -267,31 +314,31 @@
                 <tbody>
                   <tr>
                     <td class="table-element">1. Meeting the Brief</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">0</td>
                   </tr>
                   <tr>
                     <td class="table-element">2. Investigation and Plan</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">404</td>
                   </tr>
                   <tr>
                     <td class="table-element">3. Design</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">376</td>
                   </tr>
                   <tr>
                     <td class="table-element">4. Implementation</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">483</td>
                   </tr>
                   <tr>
                     <td class="table-element">5. Testing</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">357</td>
                   </tr>
                   <tr>
                     <td class="table-element">6. Evaluation</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">327</td>
                   </tr>
                   <tr>
                     <td class="table-element">Total:</td>
-                    <td class="table-element"></td>
+                    <td class="table-element">1947</td>
                   </tr>
                 </tbody>
             </table>

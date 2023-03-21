@@ -33,12 +33,15 @@ img, video {
 
 h1 {
     font-size: 40px;
+	margin-top: 10px;
+	padding-bottom: 20px;
 }
 
 h2 {
     font-size: 28px;
     font-weight: 700;
     line-height: 26.4px;
+	padding-top: 30px;
 }
 p, li {
     font-size: 18px;
@@ -89,7 +92,7 @@ p, li {
 }
 
 .header-menu {
-    max-width: fit-content;
+    max-width: 800px;
     text-align: center;
 	margin-left: auto;
 	margin-right: auto;

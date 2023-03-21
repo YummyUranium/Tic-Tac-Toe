@@ -1,1 +1,4 @@
 Game Number,Gamemode,Result,Winner,Game Length,Starting Cell,Final Board State
+1,"['Multiplayer', None]",Draw,None,10,9,"[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']"
+2,"['Simulation Play', 'Random']",Winner,X,5,3,"[' ', 'O', 'X', ' ', ' ', 'X', ' ', 'O', 'X']"
+3,"['Simulation Play', 'Optimal']",Draw,None,9,1,"['X', 'X', 'O', 'O', 'O', 'X', 'X', 'O', 'X']"
