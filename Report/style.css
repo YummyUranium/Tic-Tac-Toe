@@ -75,7 +75,7 @@ p, li {
 }
 
 .tg .table-header {
-	background-color: #c0c0c0;
+	background-color: dimgray;
 	border-color: inherit;
 	text-align: left;
 	vertical-align: top
@@ -84,7 +84,8 @@ p, li {
 .tg .table-element {
 	border-color: inherit;
 	text-align: left;
-	vertical-align: top
+	vertical-align: top;
+	white-space: pre-wrap;
 }
 
 .header-menu {

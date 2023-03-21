@@ -38,7 +38,9 @@
                 Your browser doesn't support the video element. Consider using a different browser!
             </video>
             <h2 id="iap-title">Investigation and Plan</h2>
-            I started my investigation of the brief by first listing a number of different games, and then writing all of the pros and cons associated with them.
+            <p>
+                I started my investigation of the brief by first listing a number of different games, and then writing all of the pros and cons associated with them.
+            </p>
             <ul>
                 <li>Tic Tac Toe
                     <ul>
@@ -61,7 +63,7 @@
                     <ul>
                         <li>Pros:
                             <ul>
-                                <li>Skillful</li>
+                                <li>Skilful</li>
                                 <li>Plenty of randomness</li>
                                 <li>Easily understandable</li>
                             </ul>
@@ -155,7 +157,7 @@
                 <li>Check if the game has been won</li>
                 <li>Check if the game has been drawed</li>
                 <li>Change the player</li>
-                <li>Seperate functions for each game mode</li>
+                <li>Separate functions for each game mode</li>
                 <li>Minimax algorithm</li>
                 <li>Log data</li>
             </ul>
@@ -180,14 +182,71 @@
             <p>
                 With the whole game playable in all the required modes, I could focus on the data and data analysis.
                 Instrumental in this stage of implementation was the script I wrote to automate the data gathering - the "ttt-autorunner.py".
-                This program ran however many games I wanted, which gave me a great big sample size to analyse.
+                This program ran however many games the user asked it to, which gave me a great big sample size to analyse.
+                The program was essentially the same random simulation from the main file, with all printing to the console removed and a for loop that ran the amount of times the user told it to.
                 This proved essential to test various hypotheses such as whether there would be a difference in starting cells, as can be seen in the above video.
                 matplotlib and pandas were tricky to work with, as there was such a choice to choose from that I had difficulty using the correct functions and variable names.
                 It was also in this stage of implementation that I fully understood the lack of data points to visualise graphically, a failure on my part in the investigation stage of this project.
                 I made use of a Programiz article <a href="./index.html#ref6">[6]</a> to help with the implementation of writing to the CSV file.
             </p>
             <h2 id="t-title">Testing</h2>
+            <p>
+                I made sure that at for any input the user makes, the program would reject bad input and only accept good input, asking again if the input didn't match the requirements.
+                As you can see in the below testing table, I made sure all kinds of possible inputs, between strings, floats and negative integers were accounted for.
+            </p>
+            <table class="tg">
+                <thead>
+                  <tr>
+                    <th class="table-header">Test Case ID<br></th>
+                    <th class="table-header">Test Description<br></th>
+                    <th class="table-header">Expected Result</th>
+                    <th class="table-header">Actual Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-element">TEST_01</td>
+                    <td class="table-element">Testing whether inputting a number outside 1 to 9, in this test case the '-10', causes the computer to prompt the user to re-enter an appropiate number.</td>
+                    <td class="table-element">The console should print: "Sorry, you must enter a valid cell number (a number between 1 and 9)".</td>
+                    <td class="table-element"><samp>Sorry, you must enter a valid cell number (a number between 1 and 9)</samp></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">TEST_02</td>
+                    <td class="table-element">Testing whether inputting a float number between 1 and 9, in this test case '4.5', causes the computer to prompt the user to re-enter an appropiate number.</td>
+                    <td class="table-element">The console should print: "Sorry, you must enter a valid cell number (a number between 1 and 9)".</td>
+                    <td class="table-element"><samp>Sorry, you must enter a valid cell number (a number between 1 and 9)</samp></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">TEST_03</td>
+                    <td class="table-element">Testing whether inputting a string, in this test case 'Hello World', causes the computer to prompt the user to re-enter an appropiate number.</td>
+                    <td class="table-element">The console should print: "Sorry, you must enter a valid cell number (a number between 1 and 9)".</td>
+                    <td class="table-element"><samp>Sorry, you must enter a valid cell number (a number between 1 and 9)</samp></td>
+                  </tr>
+                  <tr>
+                    <td class="table-element">TEST_04</td>
+                    <td class="table-element">Testing whether inputting an occupied cell causes the program to remind the user that the selected cell is already occupied, and prompt them again.</td>
+                    <td class="table-element">The console should print: "Sorry, that place is already filled.", print the board again, and print "It's your turn, O. Where would you like to place your symbol?<br>Cell number:".</td>
+                    <td class="table-element"><samp>Sorry, that place is already filled.
+                        X |   |
+                        ― + ― + ―
+                          |   |
+                        ― + ― + ―
+                          |   |
+                        It's your turn, O. Where would you like to place your symbol?
+                        Cell number:</samp></td>
+                  </tr>
+                </tbody>
+                </table>
+            <p>
+                I encountered many problems while testing my program.
+                For instance, when working on the singleplayer game, which was an edited version of the multiplayer game, I found that the game wasn't ending properly, and realised I had to make the game win check at the start of the while loop.
+                I also, as mentioned above, had difficulty with the minimax algorithm. Eventually I found that the issue was with the games board being abstracted as a dictionary, rather than a much easier array, or list, and the minimax was reading the dictionary key rather than the key's value.
+                Throughout, I had difficulty with making sure that integers were read as strings to the console but interpreted as integers in the code. I tested this as necessary by using <code>print(type(variable_name))</code>.
+            </p>
             <h2 id="e-title">Evaluation</h2>
+            <p>
+                Overall, I was very happy with the project. I achieved all of my objectives and managed to implement my personal objective of having the computer be able to play perfectly.
+            </p>
             <h2 id="r-title">References</h2>
             <ol>
                 <li id="ref1">Minimax wikipedia - <a href="https://en.wikipedia.org/wiki/Minimax">https://en.wikipedia.org/wiki/Minimax</a></li>
@@ -208,31 +267,31 @@
                 <tbody>
                   <tr>
                     <td class="table-element">1. Meeting the Brief</td>
-                    <td class="table-element"><span class="word-count word-count-mtb"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">2. Investigation and Plan</td>
-                    <td class="table-element"><span class="word-count word-count-iap"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">3. Design</td>
-                    <td class="table-element"><span class="word-count word-count-d"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">4. Implementation</td>
-                    <td class="table-element"><span class="word-count word-count-i"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">5. Testing</td>
-                    <td class="table-element"><span class="word-count word-count-t"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">6. Evaluation</td>
-                    <td class="table-element"><span class="word-count word-count-e"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                   <tr>
                     <td class="table-element">Total:</td>
-                    <td class="table-element"><span class="word-count word-count-total"></span></td>
+                    <td class="table-element"></td>
                   </tr>
                 </tbody>
             </table>
